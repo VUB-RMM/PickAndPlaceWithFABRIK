@@ -42,7 +42,7 @@
       </inertial>
     </link>
 
-    <!-- Joint to connect Link 0 and Link 1 -->
+    <!-- Joint 1 connects Link 0 and Link 1 -->
     <joint name="${arm_id}_joint1" type="revolute">
       <!-- <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-2.8973" soft_upper_limit="2.8973"/> -->
       <origin rpy="0 0 0" xyz="0 0 0.333"/>
@@ -52,6 +52,18 @@
       <limit effort="87" lower="-2.8973" upper="2.8973" velocity="2.1750"/>
       <dynamics damping="${joint_damping}"/>
     </joint>
+
+    <!-- Transmission element for Joint 1 -->
+    <transmission name="${arm_id}_tran_1">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${arm_id}_joint1">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${arm_id}_motor_1">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
 
     <!-- Link 1 -->
     <link name="${arm_id}_link1">
@@ -74,7 +86,7 @@
       </inertial>
     </link>
 
-    <!-- Joint to connect Link 1 and Link 2 -->
+    <!-- Joint 2 connects Link 1 and Link 2 -->
     <joint name="${arm_id}_joint2" type="revolute">
       <!-- <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-1.7628" soft_upper_limit="1.7628"/> -->
       <origin rpy="${-pi/2} 0 0" xyz="0 0 0"/>
@@ -84,6 +96,18 @@
       <limit effort="87" lower="-1.7628" upper="1.7628" velocity="2.1750"/>
       <dynamics damping="${joint_damping}"/>
     </joint>
+
+    <!-- Transmission element for Joint 2 -->
+    <transmission name="${arm_id}_tran_2">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${arm_id}_joint2">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${arm_id}_motor_2">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+          <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
 
     <!-- Link 2 -->
     <link name="${arm_id}_link2">
@@ -106,7 +130,7 @@
       </inertial>
     </link>
 
-    <!-- Joint to connect Link 2 and Link 3 -->
+    <!-- Joint 3 connects Link 2 and Link 3 -->
     <joint name="${arm_id}_joint3" type="revolute">
       <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-2.8973" soft_upper_limit="2.8973"/>
       <origin rpy="${pi/2} 0 0" xyz="0 -0.316 0"/>
@@ -116,6 +140,18 @@
       <limit effort="87" lower="-2.8973" upper="2.8973" velocity="2.1750"/>
       <dynamics damping="${joint_damping}"/>
     </joint>
+
+    <!-- Transmission element for Joint 3 -->
+    <transmission name="${arm_id}_tran_3">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${arm_id}_joint3">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${arm_id}_motor_3">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
 
     <!-- Link 3 -->
     <link name="${arm_id}_link3">
@@ -138,7 +174,7 @@
       </inertial>
     </link>
 
-    <!-- Joint to connect Link 3 and Link 4 -->
+    <!-- Joint 4 connects Link 3 and Link 4 -->
     <joint name="${arm_id}_joint4" type="revolute">
       <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-3.0718" soft_upper_limit="-0.0698"/>
       <origin rpy="${pi/2} 0 0" xyz="0.0825 0 0"/>
@@ -148,6 +184,18 @@
       <limit effort="87" lower="-3.0718" upper="-0.0698" velocity="2.1750"/>
       <dynamics damping="${joint_damping}"/>
     </joint>
+
+    <!-- Transmission element for Joint 4 -->
+    <transmission name="${arm_id}_tran_4">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${arm_id}_joint4">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${arm_id}_motor_4">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
 
     <!-- Link 4 -->
     <link name="${arm_id}_link4">
@@ -170,7 +218,7 @@
       </inertial>
     </link>
 
-    <!-- Joint to connect Link 4 and Link 5 -->
+    <!-- Joint 5 connects Link 4 and Link 5 -->
     <joint name="${arm_id}_joint5" type="revolute">
       <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-2.8973" soft_upper_limit="2.8973"/>
       <origin rpy="${-pi/2} 0 0" xyz="-0.0825 0.384 0"/>
@@ -180,6 +228,18 @@
       <limit effort="12" lower="-2.8973" upper="2.8973" velocity="2.6100"/>
       <dynamics damping="${joint_damping}"/>
     </joint>
+
+    <!-- Transmission element for Joint 5 -->
+    <transmission name="${arm_id}_tran_5">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${arm_id}_joint5">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${arm_id}_motor_5">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
 
     <!-- Link 5 -->
     <link name="${arm_id}_link5">
@@ -202,7 +262,7 @@
       </inertial>
     </link>
 
-    <!-- Joint to connect Link 5 and Link 6 -->
+    <!-- Joint 6 connects Link 5 and Link 6 -->
     <joint name="${arm_id}_joint6" type="revolute">
       <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-0.0175" soft_upper_limit="3.7525"/>
       <origin rpy="${pi/2} 0 0" xyz="0 0 0"/>
@@ -212,6 +272,18 @@
       <limit effort="12" lower="-0.0175" upper="3.7525" velocity="2.6100"/>
       <dynamics damping="${joint_damping}"/>
     </joint>
+
+    <!-- Transmission element for Joint 6 -->
+    <transmission name="${arm_id}_tran_6">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${arm_id}_joint6">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${arm_id}_motor_6">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
 
     <!-- Link 6 -->
     <link name="${arm_id}_link6">
@@ -234,7 +306,7 @@
       </inertial>
     </link>
 
-    <!-- Joint to connect Link 6 and Link 7 -->
+    <!-- Joint 7 connects Link 6 and Link 7 -->
     <joint name="${arm_id}_joint7" type="revolute">
       <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-2.8973" soft_upper_limit="2.8973"/>
       <origin rpy="${pi/2} 0 0" xyz="0.088 0 0"/>
@@ -244,6 +316,18 @@
       <limit effort="12" lower="-2.8973" upper="2.8973" velocity="2.6100"/>
       <dynamics damping="${joint_damping}"/>
     </joint>
+
+    <!-- Transmission element for Joint 7 -->
+    <transmission name="${arm_id}_tran_7">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${arm_id}_joint7">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="${arm_id}_motor_7">
+        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
     
     <!-- Link 7 -->
     <link name="${arm_id}_link7">
@@ -285,3 +369,4 @@
 
   </xacro:macro>
 </robot>
+
