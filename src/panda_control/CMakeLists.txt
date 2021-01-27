@@ -9,11 +9,15 @@ project(panda_control)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
+  std_msgs
   roscpp
   tf
 )
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
+find_package(orocos_kdl)
+find_package(kdl_parser)
+find_package(Eigen3 REQUIRED)
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -115,14 +119,23 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
- #include
- ${catkin_INCLUDE_DIRS}
+ include
+ ${EIGEN3_INCLUDE_DIR}
+)
+include_directories(
+  SYSTEM ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
 #   src/${PROJECT_NAME}/panda_control.cpp
 # )
+add_library(stabilizing_control include/stabilizing_control/stabilizing_control.h
+                                                        src/stabilizing_control.cpp)
+add_dependencies(stabilizing_control ${catkin_EXPORTED_TARGETS})
+target_link_libraries(stabilizing_control ${catkin_LIBRARIES} )
+
+
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
@@ -135,6 +148,12 @@ include_directories(
 # add_executable(${PROJECT_NAME}_node src/panda_control_node.cpp)
 add_executable(panda_positioncontrol_jointspace src/panda_positioncontrol_jointspace.cpp)
 target_link_libraries(panda_positioncontrol_jointspace ${catkin_LIBRARIES} )
+
+add_executable(panda_positioncontrol_taskspace src/panda_positioncontrol_taskspace.cpp)
+target_link_libraries(panda_positioncontrol_taskspace stabilizing_control
+                                                      ${catkin_LIBRARIES} 
+                                                      ${kdl_parser_LIBRARIES} 
+                                                      ${orocos_kdl_LIBRARIES})
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
