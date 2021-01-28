@@ -5,9 +5,29 @@
 #include <cstdlib>
 #include <algorithm>
 
+#include <cstdio>
+#include <iostream>
+#include <memory>
+#include <stdexcept>
+#include <array>
+
+
 using namespace std;
 using namespace KDL;
 using namespace Eigen;
+
+std::string exec(const char* cmd) {
+    std::array<char, 128> buffer;
+    std::string result;
+    std::unique_ptr<FILE, decltype(&pclose)> pipe(popen(cmd, "r"), pclose);
+    if (!pipe) {
+        throw std::runtime_error("popen() failed!");
+    }
+    while (fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr) {
+        result += buffer.data();
+    }
+    return result;
+}
 
 StabilizingControl::StabilizingControl(string name) : n(name)
 {
@@ -236,12 +256,33 @@ void StabilizingControl::inverseKinematics()
 
     if(inversekinematics_status>=0)
     {
-        // std::cout << "INVERSE KINEMATICS: desired joint angles" << std::endl;
-        for (int i=0; i<joint_num;i++)
-        {   
-            q_r[i] = kdl_q_r(i); 
-            // std::cout << " q_r" << i << " = " << kdl_q_r(i) << std::endl;            
+	//string path_fabrik = ros::package::getPath("panda_control");
+	string str = exec("python \"/home/atieh/PickAndPlaceWithFABRIK/src/panda_control/src/Main.py\"");
+     cout<<str;
+
+      int counter = 0;
+
+      std::string s = str.substr(1, str.length());
+      std::string delimiter = ",";
+
+      size_t pos = 0;
+      std::string token;
+      while ((pos = s.find(delimiter)) != std::string::npos) {
+         token = s.substr(0, pos);
+         float detected_q = std::stof(token);
+         q_r[counter] = detected_q;
+         counter++;
+         // std::cout << token << std::endl;
+         s.erase(0, pos + delimiter.length());
         }
+        float detected_s = std::stof(s);
+        q_r[counter] = detected_s;
+        // std::cout << "INVERSE KINEMATICS: desired joint angles" << std::endl;
+        //for (int i=0; i<joint_num;i++)
+        //{   
+          //  q_r[i] = kdl_q_r(i); 
+            // std::cout << " q_r" << i << " = " << kdl_q_r(i) << std::endl;            
+        //}
     }
     else
     {
